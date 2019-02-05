@@ -76,10 +76,10 @@ play() {
             exit 1
         elif [[ $input -eq $value ]]
         then
-            echo "   NICE!"
+            echo "$spaces""NICE!"
             ((correct++))
         else
-            echo "   WRONG $bytes: $value"
+            echo "$spaces""WRONG $bytes: $value"
             ((wrong++))
         fi
     done
