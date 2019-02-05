@@ -1,6 +1,11 @@
 #! /bin/bash
 
 declare -r PROGRAM=$(basename $0)
+if [[ ! -z $1 && $1 -gt '2' ]]; then
+    declare -r let byteLength=$1
+else
+    declare -r let byteLength=4
+fi
 
 USAGE() {
     echo "ERROR: $PROGRAM: I don't know how but you mucked up"
@@ -13,9 +18,9 @@ get_random() {
     echo -n $rndm
 }
 
-build4() {
+buildBytes() {
     str=""
-    for i in {1..4}
+    for ((  i=0; i<$byteLength; i++ ))
     do
         str="$str"$(get_random)
     done
@@ -43,7 +48,7 @@ play() {
     wrong=0
     while true
     do
-        bytes=$(build4)
+        bytes=$(buildBytes)
         value=$(getValue $bytes)
         echo "$bytes"
         read input
@@ -59,7 +64,6 @@ play() {
             ((wrong++))
         fi
     done
-
 }
 
 main() {
@@ -78,6 +82,8 @@ main() {
 
 echo "Welcome! See how many binary strings you can correctly value."
 echo "Are you ready to play? (y or n)"
+#if [[ -z $1 && $1 -gt 1 ]]
+#then
 main
 
 exit 0
