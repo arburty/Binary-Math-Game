@@ -43,24 +43,43 @@ getValue() {
     echo "$total"
 }
 
+spacing() {
+    if [[ -z $1 ]]
+    then
+        USAGE
+    fi
+
+    str=""
+    num=$(echo -n $1 | wc -c | tr -d '[:blank:]')
+    for (( i=0; i<=$num; i++ ))
+    do
+        str+=" "
+    done
+    echo "$str"
+}
+
 play() {
     correct=0
     wrong=0
+    counter=0
     while true
     do
+        ((counter++))
         bytes=$(buildBytes)
         value=$(getValue $bytes)
-        echo "$bytes"
+        echo "$counter: $bytes"
+        spaces=$(spacing "$counter;")
+        echo -n "$spaces"
         read input
         if [[ $input == "q" ]]; then
             echo "Thanks for playing!  you got $correct correct and $wrong wrong."
             exit 1
         elif [[ $input -eq $value ]]
         then
-            echo "NICE!"
+            echo "   NICE!"
             ((correct++))
         else
-            echo "WRONG $bytes: $value"
+            echo "   WRONG $bytes: $value"
             ((wrong++))
         fi
     done
