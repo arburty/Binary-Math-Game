@@ -55,7 +55,7 @@ play() {
             echo "NICE!"
             ((correct++))
         else
-            echo "Sorry, its actually $value"
+            echo "WRONG $bytes: $value"
             ((wrong++))
         fi
     done
