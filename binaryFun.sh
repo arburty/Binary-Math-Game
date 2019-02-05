@@ -48,13 +48,15 @@ play() {
         echo "$bytes"
         read input
         if [[ $input == "q" ]]; then
-            echo "you put in $input"
+            echo "Thanks for playing!  you got $correct correct and $wrong wrong."
             exit 1
         elif [[ $input -eq $value ]]
         then
             echo "NICE!"
+            ((correct++))
         else
-            echo "NOPE."
+            echo "Sorry, its actually $value"
+            ((wrong++))
         fi
     done
 
@@ -62,21 +64,20 @@ play() {
 
 main() {
     read input
-    if [[ $input == "no" ]]; then
+    if [[ $input == "n" ]]; then
         echo "Welp. Bye then"
-    elif [[ $input == "yes" ]]
+    elif [[ $input == "y" ]]
     then
         echo "Good Luck! Enter 'q' to quit"
         play
     else
-        echo "-- Must press 'y' or 'n'"
+        echo "-- Must press 'y' or 'n' --"
         main
     fi
 }
 
 echo "Welcome! See how many binary strings you can correctly value."
-echo "Are you ready to play? (yes or no)"
+echo "Are you ready to play? (y or n)"
 main
 
 exit 0
-new
