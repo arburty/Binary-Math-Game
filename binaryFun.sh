@@ -6,7 +6,7 @@ arg="$1"
 declare -r let byteLength=$(( $(( arg > 2 )) ? arg : 4 ))
 
 die() {
-    echo "$1" 2>&1
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" 1>&2
     exit 1
 }
 
@@ -25,9 +25,7 @@ buildBytes() {
     echo $str
 }
 getValue() {
-    if [[ -z "$1" ]]; then
-        die "ERROR: $PROGRAM: getValue() needs an argument of a binary string"
-    fi
+    [[ ! -z "$1" ]] || die "getValue() needs an argument of a binary string"
 
     let total=0
     while read byte
@@ -42,10 +40,7 @@ getValue() {
 }
 
 spacing() {
-    if [[ -z $1 ]]
-    then
-        die "ERROR: $PROGRAM: spacing() needs an argument"
-    fi
+    [[ ! -z $1 ]] || { die "spacing() needs an argument"; }
 
     str=""
     num=$(echo -n $1 | wc -c | tr -d '[:blank:]')
