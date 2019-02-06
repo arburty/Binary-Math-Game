@@ -1,14 +1,12 @@
 #! /bin/bash
 
 declare -r PROGRAM=$(basename $0)
-if [[ ! -z $1 && $1 -gt '2' ]]; then
-    declare -r let byteLength=$1
-else
-    declare -r let byteLength=4
-fi
+# declare arg for one line initialization of byteLength
+arg="$1"
+declare -r let byteLength=$(( $(( arg > 2 )) ? arg : 4 ))
 
-USAGE() {
-    echo "ERROR: $PROGRAM: I don't know how but you mucked up"
+die() {
+    echo "$1" 2>&1
     exit 1
 }
 
@@ -28,7 +26,7 @@ buildBytes() {
 }
 getValue() {
     if [[ -z "$1" ]]; then
-        USAGE
+        die "ERROR: $PROGRAM: getValue() needs an argument of a binary string"
     fi
 
     let total=0
@@ -46,7 +44,7 @@ getValue() {
 spacing() {
     if [[ -z $1 ]]
     then
-        USAGE
+        die "ERROR: $PROGRAM: spacing() needs an argument"
     fi
 
     str=""
@@ -101,8 +99,6 @@ main() {
 
 echo "Welcome! See how many binary strings you can correctly value."
 echo "Are you ready to play? (y or n)"
-#if [[ -z $1 && $1 -gt 1 ]]
-#then
 main
 
 exit 0
