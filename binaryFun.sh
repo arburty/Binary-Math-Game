@@ -6,7 +6,7 @@ arg="$1"
 declare -r let byteLength=$(( $(( arg > 2 )) ? arg : 4 ))
 
 die() {
-    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" 1>&2
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
     exit 1
 }
 
@@ -40,7 +40,7 @@ getValue() {
 }
 
 spacing() {
-    [[ ! -z $1 ]] || { die "spacing() needs an argument"; }
+    [[ ! -z $1 ]] || die "spacing() needs an argument"
 
     str=""
     num=$(echo -n $1 | wc -c | tr -d '[:blank:]')
